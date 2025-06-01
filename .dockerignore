@@ -1,2 +1,33 @@
+# Sensitive or environment-specific files
+**/.aws/**
+.env
+.env.*
+
+# Build outputs or generated files
+/public/*
+!/public/.gitkeep   # Allow keeping the folder structure if needed
+
 # Actions
-.github/
+secrets.yaml
+
+# Git and version control
+.git
+.gitignore
+
+# System/editor files
+*.log
+*.tmp
+*.swp
+*.DS_Store
+.vscode
+.idea
+*.local
+*.bak
+*.old
+*.orig
+
+# Node-specific
+node_modules
+dist
+coverage
+npm-debug.log*

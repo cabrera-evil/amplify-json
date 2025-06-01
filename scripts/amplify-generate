@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+INPUT_FILE="/app/public/input.json"
+
+log() {
+    echo "[cron] $1"
+}
+
+debug() {
+    if [[ "${DEBUG:-}" == "true" || "${DEBUG:-}" == "1" ]]; then
+        echo "[debug] $1"
+    fi
+}
+
+main() {
+    log "Generating input.json with amplify-tools..."
+    debug "Using AWS_REGION: ${AWS_REGION:-ca-central-1}"
+    debug "Using AWS_PROFILE: ${AWS_PROFILE:-default}"
+    mkdir -p "$(dirname "$INPUT_FILE")"
+    amplify-tools list >"$INPUT_FILE"
+    log "input.json updated successfully at $INPUT_FILE"
+}
+
+main "$@"

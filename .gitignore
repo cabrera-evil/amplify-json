@@ -1,2 +1,11 @@
+# Sensitive or environment-specific files
+**/.aws/**
+.env
+.env.*
+
+# Build outputs or generated files
+/public/*
+!/public/.gitkeep   # Allow keeping the folder structure if needed
+
 # Actions
 secrets.yaml
