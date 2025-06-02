@@ -34,6 +34,13 @@ WARNING:
 
 # How to use this image
 
+## docker exec usage (standalone)
+
+```bash
+docker volume create -d local amplify-json-data && \
+docker run --name amplify-json --restart unless-stopped -p 80:80 --env-file .env -v ~/.aws:/root/.aws:ro -v amplify-json-data:/app/public:rw cabreraevil/amplify-json:latest
+```
+
 ## docker-compose usage
 
 ```yaml
