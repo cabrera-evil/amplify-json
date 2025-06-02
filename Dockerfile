@@ -2,9 +2,10 @@ FROM node:jod-bookworm-slim
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    curl \
-    unzip \
-    jq
+  cron \
+  curl \
+  unzip \
+  jq
 
 # Install AWS CLI v2
 RUN ARCH=$(uname -m) \

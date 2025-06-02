@@ -1,0 +1,41 @@
+{
+  "name": "amplify-json",
+  "version": "1.0.0",
+  "description": "A package for managing JSON data from AWS Amplify projects",
+  "keywords": [
+    "aws",
+    "amplify",
+    "json",
+    "data",
+    "management"
+  ],
+  "homepage": "https://github.com/cabrera-evil/amplify-json",
+  "bugs": {
+    "url": "https://github.com/cabrera-evil/amplify-json/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cabrera-evil/amplify-json"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "cabrera-evil",
+    "email": "info@cabrera-dev.com"
+  },
+  "maintainers": [
+    {
+      "name": "cabrera-evil",
+      "email": "info@cabrera-dev.com"
+    }
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "packageManager": "pnpm@10.6.1",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "semantic-release": "^24.2.5",
+    "semantic-release-export-data": "^1.1.0"
+  }
+}

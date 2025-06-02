@@ -5,17 +5,16 @@ services:
       dockerfile: Dockerfile
     image: cabreraevil/amplify-json:latest
     container_name: amplify-json
-    labels:
-      - "traefik.http.services.amplify-json.loadbalancer.server.port=80"
     restart: unless-stopped
+    ports:
+      - 80:80
     env_file:
       - .env
     volumes:
-      - ./public:/app/public:rw
-      - ./.aws:/root/.aws:ro
-    networks:
-      - traefik_net
+      - ~/.aws:/root/.aws:ro
+      - amplify-json-data:/app/public:rw
 
-networks:
-  traefik_net:
-    external: true
+volumes:
+  amplify-json-data:
+    driver: local
+    name: amplify-json-data

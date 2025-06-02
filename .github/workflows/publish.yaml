@@ -7,11 +7,18 @@ on:
     branches:
       - master
       - develop
+  pull_request:
+    branches:
+      - master
+      - develop
+  release:
+    types: [published]
+  workflow_dispatch:
 
 permissions:
-  security-events: write
   actions: read
   contents: read
+  security-events: write
 
 jobs:
   analyze_code:
@@ -29,4 +36,12 @@ jobs:
     uses: cabrera-evil/workflows/.github/workflows/publish-docker.yaml@master
     with:
       docker_image: ${{ github.event.repository.name }}
+    secrets: inherit
+
+  analyze_container:
+    name: Analyze
+    needs: publish
+    uses: cabrera-evil/workflows/.github/workflows/container-analysis.yaml@master
+    with:
+      image: cabreraevil/${{ github.event.repository.name }}:latest
     secrets: inherit
