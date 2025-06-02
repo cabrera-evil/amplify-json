@@ -7,7 +7,7 @@ set -euo pipefail
 DEFAULT_INTERVAL="5"
 LOG_FILE="/var/log/amplify-json.log"
 CRON_FILE="/etc/cron.d/amplify"
-SCRIPT="amplify-generate && amplify-process"
+SCRIPT="(amplify-generate && amplify-process)"
 
 # ========================================
 # ENVIRONMENT VARIABLES
