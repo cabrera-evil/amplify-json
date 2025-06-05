@@ -14,11 +14,12 @@ RUN ARCH=$(uname -m) \
   && /tmp/aws/install \
   && rm -rf /tmp/aws /tmp/awscliv2.zip
 
-# Install latest version of npm
-RUN npm install -g npm@latest
+# Download and install the Amplify Tools script
+RUN curl -sS https://raw.githubusercontent.com/cabrera-evil/scripting-utils/refs/heads/master/aws/amplify-tools -o /usr/local/bin/amplify-tools \
+  && chmod +x /usr/local/bin/amplify-tools
 
-# Install dependencies
-RUN npm install -g serve@latest
+# Install latest version of npm
+RUN npm install -g npm@latest serve@latest
 
 # Copy the entrypoint script to the container
 COPY docker-entrypoint.sh /usr/local/bin/

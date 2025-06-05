@@ -5,27 +5,26 @@ INPUT="/app/public/input.json"
 OUTPUT="/app/public/output.json"
 
 log() {
-  echo "[cron] $1"
+	echo "[cron] $1"
 }
 
-
 main() {
-  log "Processing input.json into output.json..."
+	log "Processing input.json into output.json..."
 
-  if [[ ! -f "$INPUT" ]]; then
-    echo "[cron] Error: Input file not found at $INPUT" >&2
-    exit 1
-  fi
+	if [[ ! -f "$INPUT" ]]; then
+		echo "[cron] Error: Input file not found at $INPUT" >&2
+		exit 1
+	fi
 
-  local apps
-  apps=$(cat "$INPUT")
+	local apps
+	apps=$(cat "$INPUT")
 
-  echo "$apps" | jq -e . >/dev/null 2>&1 || {
-    echo "[cron] Error: Invalid JSON in $INPUT" >&2
-    exit 1
-  }
+	echo "$apps" | jq -e . >/dev/null 2>&1 || {
+		echo "[cron] Error: Invalid JSON in $INPUT" >&2
+		exit 1
+	}
 
-  jq -n --argjson apps "$apps" '
+	jq -n --argjson apps "$apps" '
     $apps
     | reduce .[] as $app ([]; . + (
         ($app.branches // [])
@@ -42,7 +41,7 @@ main() {
       ))
   ' >"$OUTPUT"
 
-  log "output.json updated successfully at $OUTPUT"
+	log "output.json updated successfully at $OUTPUT"
 }
 
 main "$@"
