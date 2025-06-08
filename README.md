@@ -16,21 +16,19 @@ WARNING:
 
 # Quick reference
 
-- **Maintained by**:  
-  [Douglas Cabrera](https://github.com/cabreraevil)
+- **Maintained by**:
+  [Douglas Cabrera](https://github.com/cabrera-evil)
 
-- **Where to get help**:  
-  [GitHub Issues](https://github.com/cabreraevil/amplify-json/issues)
+- **Where to get help**:
+  [GitHub Issues](https://github.com/cabrera-evil/amplify-json/issues)
 
 # Supported tags and respective `Dockerfile` links
 
-- [`latest`](https://github.com/cabreraevil/amplify-json/blob/main/Dockerfile)
+- [`latest`](https://github.com/cabrera-evil/amplify-json/blob/main/Dockerfile)
 
 # What is amplify-json?
 
 **amplify-json** is a containerized tool that fetches metadata from AWS Amplify apps and branches, transforms it into structured JSON, and serves it via a lightweight HTTP server. It is designed to be used in observability dashboards, CI pipelines, or other automation processes that require visibility into Amplify deployments.
-
-> The project uses `awscli`, `jq`, `cron`, and `serve` to produce and expose machine-readable deployment data.
 
 # How to use this image
 
@@ -84,16 +82,16 @@ Once the container is running, you can access:
 # Quick reference (cont.)
 
 - **Where to file issues**:
-  [https://github.com/cabreraevil/amplify-json/issues](https://github.com/cabreraevil/amplify-json/issues)
+  [https://github.com/cabrera-evil/amplify-json/issues](https://github.com/cabrera-evil/amplify-json/issues)
 
 - **Supported architectures**:
-  `linux/amd64`, `linux/arm64`
+  `linux/amd64`, `linux/arm64`, `linux/arm/v7`
 
 - **Published image details**:
   [Docker Hub: cabreraevil/amplify-json](https://hub.docker.com/r/cabreraevil/amplify-json)
 
 - **Source of this description**:
-  [docs repo’s `amplify-json/` directory](https://github.com/cabreraevil/amplify-json)
+  [docs repo’s `amplify-json/` directory](https://github.com/cabrera-evil/amplify-json)
 
 # Behavior & Scheduling
 
@@ -120,18 +118,6 @@ To view the logs:
 docker exec -it amplify-json tail -f /var/log/amplify-json.log
 ```
 
-# Image variants
-
-Only `latest` is currently published. It is based on:
-
-- `node:jod-bookworm-slim`
-- Includes: `jq`, `curl`, `cron`, `awscli v2`, `serve`
-
-This is a **slim yet complete** image suitable for both development and production usage.
-
 # License
 
-This project is released under the [MIT License](https://github.com/cabreraevil/amplify-json/blob/main/LICENSE).
-Included tools like AWS CLI and `jq` are subject to their respective licenses.
-
-As with all container images, it is the user's responsibility to ensure that use complies with all relevant licenses.
+This project is released under the [MIT License](https://github.com/cabrera-evil/amplify-json/blob/main/LICENSE).
