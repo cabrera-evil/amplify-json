@@ -7,6 +7,16 @@ on:
     branches:
       - master
       - develop
+    tags:
+      - '**'
+  pull_request:
+    branches:
+      - master
+      - develop
+    types:
+      - opened
+      - reopened
+      - synchronize
   workflow_dispatch:
 
 permissions:
@@ -27,8 +37,10 @@ jobs:
       push_base_sha: ${{ github.event.base_ref }}
     secrets: inherit
 
-  release:
-    name: Release
+  publish:
+    name: Publish
     needs: analyze_code
-    uses: cabrera-evil/workflows/.github/workflows/semantic-release.yaml@master
+    uses: cabrera-evil/workflows/.github/workflows/publish-docker.yaml@master
+    with:
+      docker_image: ${{ github.event.repository.name }}
     secrets: inherit
