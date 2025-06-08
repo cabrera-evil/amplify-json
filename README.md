@@ -85,7 +85,7 @@ Once the container is running, you can access:
   [https://github.com/cabrera-evil/amplify-json/issues](https://github.com/cabrera-evil/amplify-json/issues)
 
 - **Supported architectures**:
-  `linux/amd64`, `linux/arm64`, `linux/arm/v7`
+  `linux/amd64`, `linux/arm64`
 
 - **Published image details**:
   [Docker Hub: cabreraevil/amplify-json](https://hub.docker.com/r/cabreraevil/amplify-json)
