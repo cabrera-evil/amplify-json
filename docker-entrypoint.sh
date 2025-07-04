@@ -15,6 +15,22 @@ SCRIPT="(/usr/local/bin/amplify-generate && /usr/local/bin/amplify-process)"
 CRON_EXPRESSION="${CRON_EXPRESSION:-}"
 INTERVAL="${INTERVAL:-$DEFAULT_INTERVAL}"
 
+# ===================================
+# UTILITIES
+# ===================================
+abort() {
+	echo "ERROR: $1" >&2
+	exit 1
+}
+
+info() {
+	echo "INFO: $1"
+}
+
+success() {
+	echo "SUCCESS: $1"
+}
+
 # ========================================
 # FUNCTIONS
 # ========================================
@@ -25,30 +41,32 @@ create_cronjob() {
 	chmod 0644 "$CRON_FILE"
 	# Load the cron job into crontab
 	crontab "$CRON_FILE"
+	info "Cron job created: $cron_line"
 }
 
 # ========================================
 # MAIN
 # ========================================
-# Validate cron expression or fallback to interval
-if [[ -n "$CRON_EXPRESSION" ]]; then
-	CRON_LINE="$CRON_EXPRESSION"
-else
-	if [[ "$INTERVAL" =~ ^[0-9]+$ ]]; then
-		CRON_LINE="*/$INTERVAL * * * *"
+main() {
+	if [[ -n "$CRON_EXPRESSION" ]]; then
+		CRON_LINE="$CRON_EXPRESSION"
 	else
-		echo "[entrypoint] Invalid INTERVAL value: $INTERVAL" >&2
-		exit 1
+		if [[ "$INTERVAL" =~ ^[0-9]+$ ]]; then
+			CRON_LINE="*/$INTERVAL * * * *"
+		else
+			abort "Invalid INTERVAL value: $INTERVAL"
+		fi
 	fi
-fi
+	# Ensure log file and cron directory exist
+	info "Setting up log file at $LOG_FILE"
+	mkdir -p "$(dirname "$LOG_FILE")"
+	touch "$LOG_FILE"
+	# Create cron job and run the script once
+	create_cronjob "$CRON_LINE"
+	bash -c "$SCRIPT" >"$LOG_FILE" 2>&1
+	# Start cron service in the background and run the app
+	success "Starting cron service..."
+	cron && exec "$@"
+}
 
-# Ensure log file and cron directory exist
-mkdir -p "$(dirname "$LOG_FILE")"
-touch "$LOG_FILE"
-
-# Create cron job and run the script once
-create_cronjob "$CRON_LINE"
-bash -c "$SCRIPT"
-
-# Start cron service in the background and run the app
-cron && exec "$@"
+main "$@"

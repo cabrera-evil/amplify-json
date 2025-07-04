@@ -1,29 +1,45 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# ===================================
+# GLOBAL CONFIGURATION
+# ===================================
 INPUT="/app/public/input.json"
 OUTPUT="/app/public/output.json"
 
-log() {
-	echo "[cron] $1"
+# ===================================
+# UTILITIES
+# ===================================
+abort() {
+	echo "ERROR: $1" >&2
+	exit 1
 }
 
+info() {
+	echo "INFO: $1"
+}
+
+success() {
+	echo "SUCCESS: $1"
+}
+
+# ===================================
+# MAIN LOGIC
+# ===================================
 main() {
-	log "Processing input.json into output.json..."
-
+	info "Processing input.json into output.json..."
+	# Check if input file exists
 	if [[ ! -f "$INPUT" ]]; then
-		echo "[cron] Error: Input file not found at $INPUT" >&2
-		exit 1
+		abort "Input file not found at $INPUT"
 	fi
-
+	# Read input file and validate JSON format
 	local apps
-	apps=$(cat "$INPUT")
-
-	echo "$apps" | jq -e . >/dev/null 2>&1 || {
-		echo "[cron] Error: Invalid JSON in $INPUT" >&2
-		exit 1
-	}
-
+	apps=$(<"$INPUT")
+	# Validate JSON format
+	if ! jq -e . <<<"$apps" >/dev/null 2>&1; then
+		abort "Invalid JSON in $INPUT"
+	fi
+	# Process and output the results
 	jq -n --argjson apps "$apps" '
     $apps
     | reduce .[] as $app ([]; . + (
@@ -40,8 +56,7 @@ main() {
             })
       ))
   ' >"$OUTPUT"
-
-	log "output.json updated successfully at $OUTPUT"
+	success "output.json updated successfully at $OUTPUT"
 }
 
 main "$@"
